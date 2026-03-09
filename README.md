@@ -30,6 +30,30 @@ L'application propose une visualisation immersive du système solaire en VR. Les
 - Sélectionner une planète pour afficher ses informations astronomiques et déclencher un focus caméra
 - Suivre l'état de l'application via un overlay de debug temps réel
 
+- Flux TimeModel->Controller->PlanetView
+
+<p align="center">
+  <img src="Assets/tp_xr_eng_uml.png" width="600">
+</p>
+
+Ce diagramme illustre comment une mise à jour du temps dans Unity se propage à travers tes classes pour aboutir au déplacement physique d'une planète.
+Le flux du système suit une chaîne de mise à jour déclenchée par le **TimeModel**, qui centralise la date et notifie ses abonnés lors d’un changement. Le **PlanetSystemController** reçoit cette nouvelle valeur et orchestre la mise à jour des astres en déléguant le calcul des positions au **PlanetEphemerisService**. Ce service transforme la date en coordonnées 3D adaptées au repère d’Unity, puis la **PlanetView** applique la position mise à l’échelle au `transform`, mettant ainsi à jour le rendu des planètes.
+
+- Captures de l'application via XR simulator : Vue d'ensemble
+<p align="center">
+  <img src="Assets/tp_xr_eng_1.png" width="600">
+</p>
+
+- Captures de l'application via mode miroir : Grab du handle
+<p align="center">
+  <img src="Assets/tp_xr_eng.png" width="600">
+</p>
+
+- Captures de l'application via XR simulator : Sélection de planète
+<p align="center">
+  <img src="Assets/tp_xr_eng_2.png" width="600">
+</p>
+
 ---
 
 ## Architecture MVC
