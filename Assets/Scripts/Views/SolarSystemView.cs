@@ -2,6 +2,29 @@ using UnityEngine;
 
 public class SolarSystemView : MonoBehaviour
 {
+    private Pose _initialPose;
+
+    private void Awake()
+    {
+        InitializeInitialPose();
+    }
+
+    /// <summary>
+    /// Enregistre la position et la rotation initiales du système solaire.
+    /// </summary>
+    public void InitializeInitialPose()
+    {
+        _initialPose = new Pose(transform.position, transform.rotation);
+    }
+
+    /// <summary>
+    /// Retourne la pose initiale enregistrée (position + rotation).
+    /// </summary>
+    public Pose GetInitialPose()
+    {
+        return _initialPose;
+    }
+
     /// <summary>
     /// Retourne la position actuelle du GameObject dans l'espace mondial.
     /// </summary>
@@ -13,7 +36,6 @@ public class SolarSystemView : MonoBehaviour
     /// <summary>
     /// Modifie la position du GameObject dans l'espace mondial.
     /// </summary>
-    /// <param name="newPosition">Les nouvelles coordonnées X, Y, Z.</param>
     public void SetPosition(Vector3 newPosition)
     {
         transform.position = newPosition;
@@ -30,7 +52,6 @@ public class SolarSystemView : MonoBehaviour
     /// <summary>
     /// Définit la rotation absolue du GameObject dans l'espace mondial.
     /// </summary>
-    /// <param name="newRotation">La nouvelle rotation à appliquer.</param>
     public void SetRotation(Quaternion newRotation)
     {
         transform.rotation = newRotation;
@@ -39,7 +60,6 @@ public class SolarSystemView : MonoBehaviour
     /// <summary>
     /// Applique une rotation relative à la rotation actuelle.
     /// </summary>
-    /// <param name="rotationDelta">Rotation à appliquer par rapport à l'état courant.</param>
     public void ApplyRotation(Quaternion rotationDelta)
     {
         transform.rotation = rotationDelta * transform.rotation;
@@ -48,7 +68,6 @@ public class SolarSystemView : MonoBehaviour
     /// <summary>
     /// Modifie l'échelle de manière uniforme avec un seul facteur.
     /// </summary>
-    /// <param name="scaleFactor">Facteur d'échelle uniforme.</param>
     public void SetUniformScale(float scaleFactor)
     {
         transform.localScale = Vector3.one * scaleFactor;

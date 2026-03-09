@@ -8,10 +8,13 @@ public class TimeController : MonoBehaviour
     TimeModel model;
     DateTime current;
 
-    public void Init(TimeModel m)
+    DebugOverlay _debugOverlay;
+
+    public void Init(TimeModel m, DebugOverlay debugOverlay)
     {
         model = m;
         current = DateTime.Now;
+        _debugOverlay = debugOverlay;
         model.SetTime(current);
     }
 

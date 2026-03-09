@@ -9,14 +9,19 @@ public class PlanetScaleController : IDisposable
 
     private bool _isDisposed;
 
+    private DebugOverlay _debugOverlay;
+
     public PlanetScaleController(
         SolarSystemView view,
         SolarSystemConfig config,
-        SliderManager sliderManager)
+        SliderManager sliderManager,
+        DebugOverlay debugOverlay)
     {
+        
         _view = view ?? throw new ArgumentNullException(nameof(view));
         _config = config ?? throw new ArgumentNullException(nameof(config));
         _sliderManager = sliderManager ?? throw new ArgumentNullException(nameof(sliderManager));
+        _debugOverlay = debugOverlay;
 
         ValidateConfig();
 
@@ -25,6 +30,7 @@ public class PlanetScaleController : IDisposable
         Log("Initialisé. Abonnement à SliderManager.OnValueChanged effectué.");
 
         Scale(_sliderManager.Value);
+
         Log($"Synchronisation initiale appliquée avec la valeur du slider : {_sliderManager.Value:F2}");
     }
 
@@ -33,6 +39,7 @@ public class PlanetScaleController : IDisposable
         if (_isDisposed)
         {
             Log("Appel ignoré : controller déjà disposed.", "warning");
+            _debugOverlay?.PushWarning("Controller déjà disposed");
             return;
         }
 
@@ -47,6 +54,7 @@ public class PlanetScaleController : IDisposable
             $"scale appliqué: {targetScale:F2}",
             "warning"
         );
+        _debugOverlay?.SetLastUserAction("Scaled System");
     }
 
     private float NormalizeSliderValue(float rawValue)

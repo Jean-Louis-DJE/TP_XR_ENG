@@ -9,8 +9,8 @@ public class TransformRealtimeObserver : MonoBehaviour
     public event Action<Vector3> OnTablePositionOffsetChanged;
     public event Action<Quaternion> OnTableRotationOffsetChanged;
 
-    private Vector3 initialPosition;
-    private Quaternion initialRotation;
+    private Vector3 initialPosition ;
+    private Quaternion initialRotation ;
 
     private Vector3 lastPosition;
     private Quaternion lastRotation;

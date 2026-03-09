@@ -9,18 +9,23 @@ public class PlanetSystemController : IDisposable
 
     private readonly SolarSystemConfig _config;
 
-    public PlanetSystemController(TimeModel timeModel, IPlanetEphemerisService ephemeris, PlanetView[] planets, SolarSystemConfig config)
+    private DebugOverlay _debugOverlay;
+
+    public PlanetSystemController(TimeModel timeModel, IPlanetEphemerisService ephemeris, PlanetView[] planets, SolarSystemConfig config, DebugOverlay debugOverlay)
     {
         _timeModel = timeModel;
         _ephemeris = ephemeris;
         _planets = planets;
         _config = config;
+        _debugOverlay = debugOverlay;
 
         _timeModel.OnTimeChanged += HandleTimeChanged;
 
         ApplyPlanetScale();
 
         if (_config.showOrbits)  BuildPlanetOrbits();
+
+        
 
         Log("Initialisé pour la gestion des orbites.");
     }
@@ -93,7 +98,7 @@ public class PlanetSystemController : IDisposable
 
             case "output":      // sorties / résultats
                 core = "OUTPUT";
-                break;
+                break;  
 
             default:            // cas général
                 core = "INFO";

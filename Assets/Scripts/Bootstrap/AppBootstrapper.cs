@@ -17,6 +17,10 @@ public class AppBootstrapper : MonoBehaviour
     [Tooltip("Le slider utilisé pour piloter le scale global du système solaire.")]
     [SerializeField] private SliderManager scaleSliderManager;
 
+    [Header("Command Panel")]
+    [Tooltip("Vue du panneau de commande VR.")]
+    [SerializeField] private CommandPanelView commandPanelView;
+
     [Header("Focus")]
     [Tooltip("Le tableau d'information à déplacer lors du focus.")]
     [SerializeField] private BoardView boardView;
@@ -43,6 +47,9 @@ public class AppBootstrapper : MonoBehaviour
     private PlanetTransformController _transformController;
     private PlanetScaleController _scaleController;
     private PlanetFocusController[] _focusControllers;
+    private CommandPanelController _commandPanelController;
+
+    private DebugOverlay _debugOverlay;
 
     void Start()
     {
@@ -54,7 +61,7 @@ public class AppBootstrapper : MonoBehaviour
 
         // 2. Setup du moteur de temps (MonoBehaviour)
         _timeController = gameObject.AddComponent<TimeController>();
-        _timeController.Init(_timeModel);
+        _timeController.Init(_timeModel, _debugOverlay);
 
         // 3. Instanciation des contrôleurs
         
@@ -63,21 +70,34 @@ public class AppBootstrapper : MonoBehaviour
             _timeModel, 
             ephemeris, 
             planets,
-            config
+            config,
+            _debugOverlay
         );
 
         // Gère le déplacement (Position) et l'orientation (Rotation) du système
         _transformController = new PlanetTransformController(
             observer, 
             solarSystemRootView, 
-            config
+            config,
+            _debugOverlay
         );
 
         // Gère la mise à l'échelle (Scale) du système
         _scaleController = new PlanetScaleController(
             solarSystemRootView,
             config,
-            scaleSliderManager
+            scaleSliderManager,
+            _debugOverlay
+        );
+
+        // Gère les commandes du panneau VR
+        _commandPanelController = new CommandPanelController(
+            commandPanelView,
+            _timeModel,
+            config,
+            _scaleController,
+            _transformController,
+            _debugOverlay
         );
 
         // Gère le focus sur les planètes sélectionnées
@@ -95,9 +115,16 @@ public class AppBootstrapper : MonoBehaviour
                     selectedPlanetInfoTextView,
                     cameraFocusManager,
                     config,
-                    _timeModel
+                    _timeModel,
+                    _debugOverlay
                 );
             }
+        }
+
+        _debugOverlay = GetComponent<DebugOverlay>();
+        if (_debugOverlay != null)
+        {
+            _debugOverlay.Init(_timeModel);
         }
 
         Debug.Log("[BOOT] Application Ready. All controllers initialized.");
@@ -111,6 +138,7 @@ public class AppBootstrapper : MonoBehaviour
         _orbitController?.Dispose();
         _transformController?.Dispose();
         _scaleController?.Dispose();
+        _commandPanelController?.Dispose();
 
         if (_focusControllers != null)
         {

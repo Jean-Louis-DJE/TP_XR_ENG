@@ -7,19 +7,27 @@ public class PlanetTransformController : IDisposable
     private readonly SolarSystemView _view;
     private readonly SolarSystemConfig _config;
 
+    private Pose _initialPose;
+
     private bool _isDisposed;
+    private DebugOverlay _debugOverlay;
 
     public PlanetTransformController(
         TransformRealtimeObserver observer,
         SolarSystemView view,
-        SolarSystemConfig config)
+        SolarSystemConfig config,
+        DebugOverlay debugOverlay)
     {
+        
         _observer = observer ?? throw new ArgumentNullException(nameof(observer));
         _view = view ?? throw new ArgumentNullException(nameof(view));
         _config = config ?? throw new ArgumentNullException(nameof(config));
+        _debugOverlay = debugOverlay;
 
         _observer.OnTablePositionOffsetChanged += HandlePositionChanged;
         _observer.OnTableRotationOffsetChanged += HandleRotationChanged;
+
+        _initialPose = _view.GetInitialPose();
 
         Log("Initialisé. Écoute des offsets de position et de rotation activée.");
     }
@@ -41,6 +49,8 @@ public class PlanetTransformController : IDisposable
             $"nouvelle position: {targetPosition}",
             "output"
         );
+
+        _debugOverlay?.SetLastUserAction("Moving Handle");
     }
 
     private void HandleRotationChanged(Quaternion rotationOffset)
@@ -52,6 +62,7 @@ public class PlanetTransformController : IDisposable
         if (IsInvalidAxis(axis))
         {
             Log("Rotation ignorée : axe invalide détecté.", "warning");
+            _debugOverlay?.PushWarning("Axe invalide détecté");
             return;
         }
 
@@ -69,11 +80,20 @@ public class PlanetTransformController : IDisposable
             $"sensibilité: {_config.rotationSensitivity:F2}",
             "output"
         );
+        _debugOverlay?.SetLastUserAction("Rotating Handle");
     }
 
     private static bool IsInvalidAxis(Vector3 axis)
     {
         return float.IsNaN(axis.x) || float.IsNaN(axis.y) || float.IsNaN(axis.z);
+    }
+
+    public void resetViewPose()
+    {
+        _view.SetPosition(_initialPose.position);
+        _view.SetRotation(_initialPose.rotation);
+        Log("Reset view", "output");
+        _debugOverlay?.SetLastUserAction("View Reseted");
     }
 
     private void Log(string message, string level = "general")

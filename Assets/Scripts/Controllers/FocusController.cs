@@ -20,20 +20,25 @@ public class PlanetFocusController : IDisposable
     private Vector3 _savedPlanetLocalPosition;
     private Quaternion _savedPlanetLocalRotation;
 
+    private DebugOverlay _debugOverlay;
+
     public PlanetFocusController(
         PlanetSelectionEmitter selectionEmitter,
         BoardView boardView,
         TMPTextView textView,
         CameraFocusManager cameraFocusManager,
         SolarSystemConfig config,
-        TimeModel timeModel)
+        TimeModel timeModel,
+        DebugOverlay debugOverlay) 
     {
+        
         _selectionEmitter = selectionEmitter ?? throw new ArgumentNullException(nameof(selectionEmitter));
         _boardView = boardView ?? throw new ArgumentNullException(nameof(boardView));
         _textView = textView ?? throw new ArgumentNullException(nameof(textView));
         _cameraFocusManager = cameraFocusManager ?? throw new ArgumentNullException(nameof(cameraFocusManager));
         _config = config ?? throw new ArgumentNullException(nameof(config));
         _timeModel = timeModel ?? throw new ArgumentNullException(nameof(timeModel));
+        _debugOverlay = debugOverlay;
 
         _selectionEmitter.PlanetSelected += HandlePlanetSelected;
         _selectionEmitter.PlanetDeselected += HandlePlanetDeselected;
@@ -46,12 +51,14 @@ public class PlanetFocusController : IDisposable
         if (planetView == null)
         {
             Log("Sélection ignorée : PlanetView null.", "warning");
+            _debugOverlay?.PushWarning("PlanetView null");
             return;
         }
 
         if (_isFocused)
         {
             Log("Sélection ignorée : un focus est déjà actif.", "warning");
+            _debugOverlay?.PushWarning("Un focus est déjà actif");
             return;
         }
 
@@ -66,6 +73,7 @@ public class PlanetFocusController : IDisposable
         UpdateBoardText(_selectedPlanet);
 
         Log($"Focus appliqué sur {_selectedPlanet.name}.", "output");
+        _debugOverlay?.SetLastUserAction("Planet Selected");
     }
 
     private void HandlePlanetDeselected(PlanetView planetView)
@@ -73,18 +81,21 @@ public class PlanetFocusController : IDisposable
         if (!_isFocused || _selectedPlanet == null)
         {
             Log("Désélection ignorée : aucun focus actif.", "warning");
+            _debugOverlay?.PushWarning("Aucun focus actif");
             return;
         }
 
         if (planetView != _selectedPlanet)
         {
             Log("Désélection ignorée : la planète ne correspond pas au focus courant.", "warning");
+            _debugOverlay?.PushWarning("Focus non reconnu");
             return;
         }
 
         RestorePreviousState();
         _timeModel.Play();
 
+        _debugOverlay?.SetLastUserAction("Planet Selected");
         Log($"Focus terminé sur {_selectedPlanet.name}.", "output");
 
         _selectedPlanet = null;
