@@ -30,6 +30,8 @@ L'application propose une visualisation immersive du système solaire en VR. Les
 - Sélectionner une planète pour afficher ses informations astronomiques et déclencher un focus caméra
 - Suivre l'état de l'application via un overlay de debug temps réel
 
+## Flux TimeModel->Controller->PlanetView et Captures du projet
+
 - Flux TimeModel->Controller->PlanetView
 
 <p align="center">
@@ -44,9 +46,13 @@ Le flux du système suit une chaîne de mise à jour déclenchée par le **TimeM
   <img src="Assets/tp_xr_eng_1.png" width="600">
 </p>
 
-- Captures de l'application via mode miroir : Grab du handle
 <p align="center">
   <img src="Assets/tp_xr_eng.png" width="600">
+</p>
+
+- Captures de l'application via mode miroir : Grab du handle
+<p align="center">
+  <img src="Assets/Screenshot_20260306_062247_Meta_Horizon.jpg" width="600">
 </p>
 
 - Captures de l'application via XR simulator : Sélection de planète
