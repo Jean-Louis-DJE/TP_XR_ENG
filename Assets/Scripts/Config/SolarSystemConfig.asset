@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c373534c9f9c40041ac76ae3d97a07f1, type: 3}
+  m_Name: SolarSystemConfig
+  m_EditorClassIdentifier: Assembly-CSharp::SolarSystemConfig
+  distanceScale: 0.4
+  planetSizeScale: 0.2
+  showOrbits: 1
+  minScale: 0.5
+  maxScale: 3
+  positionSensitivity: 1
+  rotationSensitivity: 1
+  planets:
+  - planet: 0
+    displayName: Mercury
+    distanceToSunAU: 0.39
+    orbitalPeriodDays: 88
+    diameterKm: 4879
+  - planet: 1
+    displayName: Venus
+    distanceToSunAU: 0.72
+    orbitalPeriodDays: 225
+    diameterKm: 12104
+  - planet: 2
+    displayName: Earth
+    distanceToSunAU: 1
+    orbitalPeriodDays: 365
+    diameterKm: 12742
+  - planet: 3
+    displayName: Mars
+    distanceToSunAU: 1.52
+    orbitalPeriodDays: 687
+    diameterKm: 6779
+  - planet: 4
+    displayName: Jupiter
+    distanceToSunAU: 5.2
+    orbitalPeriodDays: 4333
+    diameterKm: 139820
+  - planet: 5
+    displayName: Saturn
+    distanceToSunAU: 9.54
+    orbitalPeriodDays: 10759
+    diameterKm: 116460
+  - planet: 6
+    displayName: Uranus
+    distanceToSunAU: 19.19
+    orbitalPeriodDays: 30687
+    diameterKm: 50724
+  - planet: 7
+    displayName: Neptune
+    distanceToSunAU: 30.07
+    orbitalPeriodDays: 60190
+    diameterKm: 49244

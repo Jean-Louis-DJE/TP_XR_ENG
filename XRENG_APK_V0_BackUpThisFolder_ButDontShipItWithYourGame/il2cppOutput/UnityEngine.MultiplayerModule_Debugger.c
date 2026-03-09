@@ -29,11 +29,11 @@ static const Il2CppMethodExecutionContextInfoIndex g_methodExecutionContextInfoI
 IL2CPP_EXTERN_C Il2CppSequencePoint g_sequencePointsUnityEngine_MultiplayerModule[];
 Il2CppSequencePoint g_sequencePointsUnityEngine_MultiplayerModule[5] = 
 {
-	{ 80374, 0, 0, 0, 0, 0, -1, kSequencePointKind_Normal, 0, 0 },
-	{ 80374, 0, 0, 0, 0, 0, 16777215, kSequencePointKind_Normal, 0, 1 },
-	{ 80374, 1, 95, 95, 9, 10, 0, kSequencePointKind_Normal, 0, 2 },
-	{ 80374, 1, 96, 96, 13, 39, 1, kSequencePointKind_Normal, 0, 3 },
-	{ 80374, 1, 97, 97, 9, 10, 7, kSequencePointKind_Normal, 0, 4 },
+	{ 80436, 0, 0, 0, 0, 0, -1, kSequencePointKind_Normal, 0, 0 },
+	{ 80436, 0, 0, 0, 0, 0, 16777215, kSequencePointKind_Normal, 0, 1 },
+	{ 80436, 1, 95, 95, 9, 10, 0, kSequencePointKind_Normal, 0, 2 },
+	{ 80436, 1, 96, 96, 13, 39, 1, kSequencePointKind_Normal, 0, 3 },
+	{ 80436, 1, 97, 97, 9, 10, 7, kSequencePointKind_Normal, 0, 4 },
 };
 #else
 extern Il2CppSequencePoint g_sequencePointsUnityEngine_MultiplayerModule[];
@@ -55,7 +55,7 @@ static const Il2CppSequencePointSourceFile g_sequencePointSourceFiles[1] = { NUL
 #if IL2CPP_MONO_DEBUGGER
 static const Il2CppTypeSourceFilePair g_typeSourceFiles[1] = 
 {
-	{ 9759, 1 },
+	{ 9775, 1 },
 };
 #else
 static const Il2CppTypeSourceFilePair g_typeSourceFiles[1] = { { 0, 0 } };
